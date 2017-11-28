@@ -61,14 +61,6 @@ def insert_info(conn):
 # def select(conn):
 
 def select_info(conn):
-    """
-    从数据库中取数据
-
-    @param filename:
-
-    @return
-    """
-    # logging.info("从数据库中读取数据")
     entries = []
     cur = conn.cursor()
     try:
