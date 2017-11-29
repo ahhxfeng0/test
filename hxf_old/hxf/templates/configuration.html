@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<!-- <style type="text/css">
+		body {
+			font-family: "Droid Sans", Arial, sans-serif;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 1.7;
+			color: #777;
+			background: #fff;
+		}
+		table {
+			position: relative;
+			border: 1px solid #000;
+			align: center;
+			margin: 2.5%;
+			top: 80px;
+			width: 95%;
+			border-color: white;
+		}
+	</style> -->
+	<style>
+		body {
+	margin:0;
+	padding:20px;
+	font:13px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
+	}
+
+/* ---- Some Resets ---- */
+
+p,
+table, caption, td, tr, th {
+	margin:0;
+	padding:0;
+	font-weight:normal;
+	}
+
+/* ---- Paragraphs ---- */
+
+p {
+	margin-bottom:15px;
+	}
+
+/* ---- Table ---- */
+
+table {
+	border-collapse:collapse;
+	margin-bottom:15px;
+	width:90%;
+	}
+
+	caption {
+		text-align:left;
+		font-size:15px;
+		padding-bottom:10px;
+		}
+
+	table td,
+	table th {
+		padding:5px;
+		border:1px solid #fff;
+		border-width:0 1px 1px 0;
+		}
+
+	thead th {
+		background:#91c5d4;
+		}
+
+		thead th[colspan],
+		thead th[rowspan] {
+			background:#66a9bd;
+			}
+
+	tbody th,
+	tfoot th {
+		text-align:left;
+		background:#91c5d4;
+		}
+
+	tbody td,
+	tfoot td {
+		text-align:center;
+		background:#d5eaf0;
+		}
+
+	tfoot th {
+		background:#b0cc7f;
+		}
+
+	tfoot td {
+		background:#d7e1c5;
+		font-weight:bold;
+		}
+
+	tbody tr.odd td {
+		background:#bcd9e1;
+		}
+	</style>
+
+</head>
+<body>
+	<table>
+
+	</table>
+	<table border="1">
+		<tr>
+			<td>id</td>
+			<td>configuation</td>
+
+
+		</tr>
+		{% for data in list %}
+		<tr>
+			<td>{{data['id']}}</td>
+			<td>{{data['configuration']}}</td>
+
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>>
