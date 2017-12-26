@@ -9,7 +9,7 @@ import (
 	"log"
 	"net/http"
 	"math/rand"
-	"sort"
+	// "sort"
 	// "net/url"
 )
 const name = "abcdefghijklmnopqrstuvwxyz"
@@ -40,7 +40,7 @@ func  RandomString(pixff string, strlen int) string {
 // // phoneData := make(map[string]string)
 // type phonenumbers struct{
 // 	Items []PhoneNumberA
-	
+
 // }
 // type Items struct{
 // 	Item []PhoneNumberA
@@ -71,11 +71,7 @@ func  RandomString(pixff string, strlen int) string {
 //     OrderItem []Item `json:item`
 //     // OrderRefund []Refund `json:refund`
 // }
-type Items struct{
-	ItemA []ItemA
-	ItemB []ItemB
-	ItemC []ItemC
-}
+
 type ItemA struct {
     Name string `json:name`
     PhoneNumber string    `json:phone_number`
@@ -92,23 +88,32 @@ type ItemC struct{
 	Telephone string `json:phone`
 	Note string `json:note`
 }
-func (i *Items)getName()(attr string, Item string)  {
-	name := &i.Name
-	nickname := &i.NickName
-	fullname := &i.FullName
-
-	if name != nil {
-		return "Name", "ItemA"
-	}else if nickname != nil{
-		return "NickName", "ItemB"
-	}else{
-		return "FullName", "ItemC"
-	}
+type Items struct{
+	ItemA []ItemA
+	ItemB []ItemB
+	ItemC []ItemC
 }
+type ItemsA struct{
+	ItemA []ItemA
+}
+
+// func (i *ItemsA)getName()()  {
+// 	name := &i.Name
+// 	return * name
+// }
+// func (i *ItemsA)sortByName()  {
+// 	sort.Sort(ItemsA.ItemA)
+// }
+// // type nameList []ItemA
+// func (a *ItemA) Len() int {return len(a)}
+// func (a *ItemA) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+// func (a *ItemA) Less(i, j int) bool {
+// 	return a[i].name < a[j].name
+// }
 // func (i *Items)sortByName()  {
 // 	name, itemName := i.getName()
 // 	type nameList []itemName
-// 	// len := func (a nameList) Len() (int) {return len(a)} 
+// 	// len := func (a nameList) Len() (int) {return len(a)}
 // 	// return func (a nameList) Len() int {
 // 	// 	return len(a)
 // 	// }
@@ -116,7 +121,7 @@ func (i *Items)getName()(attr string, Item string)  {
 // 		return len(a)
 // 	}
 // 	return func (a nameList)  {
-		
+
 // 	}
 // 	return func(x int) int {
 // 		sum += x
@@ -127,15 +132,15 @@ func (i *Items)getName()(attr string, Item string)  {
 // 	// 	return a[i].name < a[j].name
 // 	// }
 // }
-type i []Items
-var attr, itemName = (*Items).getName(i)
+// type i *Items
+// var attr, itemName = (*Items).getName(i)
 
-type nameList []itemName
-func (a nameList) Len() int { return len(a)}
-func (a nameList) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
-func (a nameList) Less(i, j int) bool {
-	return a[i].name < a[j].name
-}
+// type nameList []itemName
+// func (a nameList) Len() int { return len(a)}
+// func (a nameList) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+// func (a nameList) Less(i, j int) bool {
+// 	return a[i].name < a[j].name
+// }
 
 // var attr, itemName = i.getName()
 // type namelist []itemName
@@ -150,9 +155,9 @@ func (a nameList) Less(i, j int) bool {
 // 	func (a nameLista) Less(i, j int) bool {
 // 		return a[i].name < a[j].name
 // 	}
-type Phone interface {
+type PhoneSort interface {
 	getName()
-	sortByName()
+	// sortByName()
 }
 
 // type ItemsA struct{
@@ -162,10 +167,14 @@ type Phone interface {
 func main() {
 
 
-	var m Items
+	var m ItemsA
 	for i := 0; i < 4; i++ {
-		m.OrderItem = append(m.OrderItem, Item{Name: RandomString(name, 1), Phone_number: RandomString(phone, 4)})
+		m.ItemA = append(m.ItemA, Item{Name: RandomString(name, 1), PhoneNumber: RandomString(phone, 4)})
 		time.Sleep(1000)
+	}
+	var m1 ItemsA
+	for i := 0; i < 4; i++ {
+		m1 = append(m1, ItemA{Name: RandomString(name, 1), PhoneNumber: RandomString(phone, 4)})
 	}
 
 	// var s Serverslice
@@ -187,20 +196,20 @@ func main() {
 	// fmt.Printf("%#v\n", PA)
 	// // var PhoneNumberAs phonenumbers
 	// PhoneNumberAs := new(phonenumbers)
-	
+
 	// // PhoneNumberAs.Items = [{
 	// // 	{Name:"d", Phone_number:"516"},
 	// // 	{Name:"C", Phone_number:"576"},
 	// // 	{Name:"e", Phone_number:"526"},
 	// // 	{Name:"a", Phone_number:"536"},
-		
+
 	// // }]
 	// // PhoneNumberA := []
 	// PhoneNumberA := [{"Name":"d", "Phone_number":"516"},
 	// 	{"Name":"C", "Phone_number":"576"},
 	// 	// {Name:"e", Phone_number:"526"},
 	// 	// {Name:"a", Phone_number:"536"},
-		
+
 	// ]
 
 	// var s Items
@@ -213,14 +222,14 @@ func main() {
 	// req = bytes.NewBuffer([]byte(tmp))
 	// resp, _ = http.Post("http://localhost:9001/sort", "application/json;charset=utf-8", body)
 
-	
+
 
 	// var PA1 PhoneNumberA
 	// PA.TYPE = "A"
 	// PA.phoneData["name"] = "lisi"
 	// PA.phoneData["phone_number"] = "314651882"
 	// PA = PhoneNumberPost()
-	
+
 
 	// b, err := json.Marshal(s)
 	c, err := json.Marshal(m)

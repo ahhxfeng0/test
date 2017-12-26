@@ -39,20 +39,59 @@ type Serverslice struct {
 //     Name string `json:name`
 //     Phone_number string    `json:phone_number`
 // }
-
-
-type sortByName []Item
-func (a sortByName) Len() int { return len(a)}
-func (a sortByName) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
-func (a sortByName) Less(i, j int) bool {
-	if a[i].Name < a[j].Name {
-		return 	true
-	}
-	if a[i].Name > a[j].Name {
-		return 	false
-	}
-	return a[i].Name < a[j].Name
+func (i *ItemA)getName() string{
+	name := i.Name
+	return name
 }
+func (i *ItemB)getName() string{
+	name := i.NickName
+	return name
+}
+func (i *ItemC)getName() string{
+	name := i.FullName
+	return name
+}
+
+// func (i *ItemsA)sortByName()  struct{
+// 	sort.Sort(sortList(ItemsA.ItemA))
+// 	return ItemsA
+// }
+// type nameList []ItemA
+func (i *Itema)()  {
+
+}
+type sortLista []ItemA
+func (a sortLista) Len() int {return len(a)}
+func (a sortLista) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+func (a sortLista) Less(i, j int) bool {
+	return a[i].getName() < a[j].getName()
+}
+
+type sortListb []ItemB
+func (a sortListb) Len() int {return len(a)}
+func (a sortListb) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+func (a sortListb) Less(i, j int) bool {
+	return a[i].getName() < a[j].getName()
+}
+
+type sortListc []ItemC
+func (a sortListc) Len() int {return len(a)}
+func (a sortListc) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+func (a sortListc) Less(i, j int) bool {
+	return a[i].getName() < a[j].getName()
+}
+// type sortByName []Item
+// func (a sortByName) Len() int { return len(a)}
+// func (a sortByName) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+// func (a sortByName) Less(i, j int) bool {
+// 	if a[i].Name < a[j].Name {
+// 		return 	true
+// 	}
+// 	if a[i].Name > a[j].Name {
+// 		return 	false
+// 	}
+// 	return a[i].Name < a[j].Name
+// }
 
 
 func main() {
@@ -120,7 +159,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 		// var s PhoneNumberA
 		// json.Unmarshal([]byte(result), &s)
-		
+
 		// fmt.Println("hello world !")
 		// fmt.Println(s.TYPE)
 		// fmt.Println(s.Name)
