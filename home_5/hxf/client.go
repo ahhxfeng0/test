@@ -12,6 +12,7 @@ import (
 	// "sort"
 	// "net/url"
 )
+const PhoneType = "ABC"
 const name = "abcdefghijklmnopqrstuvwxyz"
 const phone = "0123456789"
 func  RandomString(pixff string, strlen int) string {
@@ -155,7 +156,7 @@ type ItemsA struct{
 // 	func (a nameLista) Less(i, j int) bool {
 // 		return a[i].name < a[j].name
 // 	}
-type PhoneSort interface {
+type PhoneSorter interface {
 	getName()
 	// sortByName()
 }
@@ -167,15 +168,23 @@ type PhoneSort interface {
 func main() {
 
 
-	var m ItemsA
+	var m Items
+	phonetype := RandomString(PhoneType, 1)
 	for i := 0; i < 4; i++ {
-		m.ItemA = append(m.ItemA, Item{Name: RandomString(name, 1), PhoneNumber: RandomString(phone, 4)})
+		switch phonetype {
+		case "A":
+			m.ItemA = append(m.ItemA, ItemA{Name: RandomString(name, 1), PhoneNumber: RandomString(phone, 4)})
+		case "B":
+			m.ItemB = append(m.ItemB, ItemB{NickName: RandomString(name, 1), Phone: RandomString(phone, 4), Address: RandomString(name, 5)})
+		case "C":
+			m.ItemC = append(m.ItemC, ItemC{FullName: RandomString(name, 1), Telephone: RandomString(phone, 4), Note: RandomString(name, 5)})
+		}
 		time.Sleep(1000)
 	}
-	var m1 ItemsA
-	for i := 0; i < 4; i++ {
-		m1 = append(m1, ItemA{Name: RandomString(name, 1), PhoneNumber: RandomString(phone, 4)})
-	}
+	// var m1 ItemsA
+	// for i := 0; i < 4; i++ {
+	// 	m1 = append(m1, ItemA{Name: RandomString(name, 1), PhoneNumber: RandomString(phone, 4)})
+	// }
 
 	// var s Serverslice
 

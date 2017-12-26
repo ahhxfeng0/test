@@ -30,6 +30,37 @@ type Serverslice struct {
 	ServersID string
 }
 
+
+type ItemA struct {
+    Name string `json:name`
+    PhoneNumber string    `json:phone_number`
+}
+
+type ItemB struct{
+	NickName string `json:name`
+	Phone string `json:phone`
+	Address string `json:address`
+}
+
+type ItemC struct{
+	FullName string `json:name`
+	Telephone string `json:phone`
+	Note string `json:note`
+}
+
+type PhoneSorter interface {
+	getName()
+	// sortByName()
+}
+
+type Items struct{
+	ItemA []ItemA
+	ItemB []ItemB
+	ItemC []ItemC
+}
+type ItemsA struct{
+	ItemA []ItemA
+}
 // type Items struct {
 //     // Ono string `json:ono`
 //     OrderItem []Item `json:item`
@@ -43,7 +74,7 @@ func (i *ItemA)getName() string{
 	name := i.Name
 	return name
 }
-func (i *ItemB)getName() string{
+func (i ItemB)getName() string{
 	name := i.NickName
 	return name
 }
@@ -57,9 +88,12 @@ func (i *ItemC)getName() string{
 // 	return ItemsA
 // }
 // type nameList []ItemA
-func (i *Itema)()  {
-
-}
+// type sortList []PhoneSorter
+// func (a sortList) Len() int {return len(a)}
+// func (a sortList) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+// func (a sortList) Less(i, j int) bool {
+// 	return a[i].getName() < a[j].getName()
+// }
 type sortLista []ItemA
 func (a sortLista) Len() int {return len(a)}
 func (a sortLista) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
@@ -122,7 +156,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err)
 		}
-		sort.Sort(sortByName(items.OrderItem))
+		sort.Sort(sortLista(items.ItemA))
 		json.NewEncoder(w).Encode(items)
 		if err := json.Unmarshal(result, &items); err == nil{
 			fmt.Printf("%+v", items)
