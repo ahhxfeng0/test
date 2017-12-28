@@ -6,7 +6,7 @@ import (
 	"html"
 	"io/ioutil"
 	"net/http"
-	"strings"
+	// "strings"
 	"sort"
 	"bytes"
 )
@@ -48,10 +48,18 @@ type ItemC struct{
 	Note string `json:note`
 }
 
-type PhoneSorter interface {
-	getName()
-	// sortByName()
+type PhoneGetNamer interface {
+	getName() string  
+	// sortByName() struct
 }
+// type PhoneSorter interface{
+// 	PhoneGetNamer
+// 	sortByName() struct
+// }
+
+// func (i Items)sortByName() struct{
+// 	var i[0] PhoneGetNamer = new(type) 
+// }
 
 type Items struct{
 	ItemA []ItemA
@@ -74,7 +82,7 @@ func (i *ItemA)getName() string{
 	name := i.Name
 	return name
 }
-func (i ItemB)getName() string{
+func (i *ItemB)getName() string{
 	name := i.NickName
 	return name
 }
@@ -83,12 +91,16 @@ func (i *ItemC)getName() string{
 	return name
 }
 
+// func (i ItemA)sortByName() struct {
+// 	sort.Sort(sortLista(i))
+// 	return i
+// }
 // func (i *ItemsA)sortByName()  struct{
 // 	sort.Sort(sortList(ItemsA.ItemA))
 // 	return ItemsA
 // }
 // type nameList []ItemA
-// type sortList []PhoneSorter
+// type sortList []PhoneGetNamer
 // func (a sortList) Len() int {return len(a)}
 // func (a sortList) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
 // func (a sortList) Less(i, j int) bool {
@@ -101,19 +113,19 @@ func (a sortLista) Less(i, j int) bool {
 	return a[i].getName() < a[j].getName()
 }
 
-type sortListb []ItemB
-func (a sortListb) Len() int {return len(a)}
-func (a sortListb) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
-func (a sortListb) Less(i, j int) bool {
-	return a[i].getName() < a[j].getName()
-}
+// type sortListb []ItemB
+// func (a sortListb) Len() int {return len(a)}
+// func (a sortListb) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+// func (a sortListb) Less(i, j int) bool {
+// 	return a[i].getName() < a[j].getName()
+// }
 
-type sortListc []ItemC
-func (a sortListc) Len() int {return len(a)}
-func (a sortListc) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
-func (a sortListc) Less(i, j int) bool {
-	return a[i].getName() < a[j].getName()
-}
+// type sortListc []ItemC
+// func (a sortListc) Len() int {return len(a)}
+// func (a sortListc) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
+// func (a sortListc) Less(i, j int) bool {
+// 	return a[i].getName() < a[j].getName()
+// }
 // type sortByName []Item
 // func (a sortByName) Len() int { return len(a)}
 // func (a sortByName) Swap(i, j int) {a[i], a[j] = a[j], a[i]}
@@ -138,19 +150,46 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hi, wait for sort %s", html.EscapeString(r.URL.Path[1:]))
 	if r.Method == "GET" {
 		fmt.Println("method:", r.Method) //获取请求的方法
-
-		fmt.Println("username", r.Form["username"])
-		fmt.Println("password", r.Form["password"])
-
-		for k, v := range r.Form {
-			fmt.Print("key:", k, "; ")
-			fmt.Println("val:", strings.Join(v, ""))
-		}
 	} else if r.Method == "POST" {
 		result, _ := ioutil.ReadAll(r.Body)
 		r.Body.Close()
 		fmt.Printf("%s\n", result)
+		phoneType := r.FormValue("type")
+		fmt.Printf("%+v", phoneType)
 		var items Items
+		// switch phoneType {
+		// case "A":
+		// 	// json.Unmarshal(result, &items.ItemA)
+		// 	// sort.Sort(sortList(items.ItemA))
+		// 	decoder := json.NewDecoder(bytes.NewBuffer(result))
+		// 	err := decoder.Decode(&items.ItemA)
+		// 	if err != nil {
+		// 		panic(err)
+		// 	}
+			
+		// 	sort.Sort(sortLista(items.ItemA))
+		// 	json.NewEncoder(w).Encode(items)
+		// case "B":
+		// 	// json.Unmarshal(result, &items.ItemA)
+		// 	// sort.Sort(sortList(items.ItemA))
+		// 	decoder := json.NewDecoder(bytes.NewBuffer(result))
+		// 	err := decoder.Decode(&items.ItemB)
+		// 	if err != nil {
+		// 		panic(err)
+		// 	}
+		// 	sort.Sort(sortListb(items.ItemB))
+		// 	json.NewEncoder(w).Encode(items)
+		// case "C":
+		// 	// json.Unmarshal(result, &items.ItemA)
+		// 	// sort.Sort(sortList(items.ItemA))
+		// 	decoder := json.NewDecoder(bytes.NewBuffer(result))
+		// 	err := decoder.Decode(&items.ItemC)
+		// 	if err != nil {
+		// 		panic(err)
+		// 	}
+		// 	sort.Sort(sortListc(items.ItemC))
+		// 	json.NewEncoder(w).Encode(items)
+		// }
 		decoder := json.NewDecoder(bytes.NewBuffer(result))
 		err := decoder.Decode(&items)
 		if err != nil {
@@ -165,48 +204,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			// resp,_ := json.Marshal(phoneData)
 
 		}
-
-		// //未知类型的推荐处理方法
-
-		// var f interface{}
-		// json.Unmarshal(result, &f)
-		// m := f.(map[string]interface{})
-		// for k, v := range m {
-		// 	switch vv := v.(type) {
-		// 	case string:
-		// 		fmt.Println(k, "is string", vv)
-		// 	case int:
-		// 		fmt.Println(k, "is int", vv)
-		// 	case float64:
-		// 		fmt.Println(k, "is float64", vv)
-		// 	case []interface{}:
-		// 		fmt.Println(k, "is an array:")
-		// 		for i, u := range vv {
-		// 			fmt.Println(i, u)
-		// 		}
-		// 	default:
-		// 		fmt.Println(k, "is of a type I don't know how to handle")
-		// 	}
-		// }
-
-		//结构已知，解析到结构体
-
-		// var s PhoneNumberA
-		// json.Unmarshal([]byte(result), &s)
-
-		// fmt.Println("hello world !")
-		// fmt.Println(s.TYPE)
-		// fmt.Println(s.Name)
-		// fmt.Println(s.Phone_number)
-		// fmt.Printf("%+v", s)
-		// fmt.Fprintf(w, "Items:")
-		// fmt.Fprint(w, phoneData)
-
-		// for i := 0; i < len(s.Servers); i++ {
-		// 	fmt.Println(s.Servers[i].ServerName)
-		// 	fmt.Println(s.Servers[i].ServerIP)
-		// 	fmt.Fprintf(w, s.Servers[i].ServerName)
-		// 	fmt.Fprintf(w, s.Servers[i].ServerIP)
-		// }
 	}
 }
